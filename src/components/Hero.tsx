@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'motion/react';
 import { ArrowRight, MessageSquare, Car, Bike, ShieldCheck, Award, Sparkles, CheckCircle2 } from 'lucide-react';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 
@@ -28,8 +29,14 @@ export const Hero: React.FC<HeroProps> = ({ onExploreStock }) => {
       {/* Atmospheric Automotive Grid Lines */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center lg:text-left pt-4">
+      {/* Hero Content with Smooth Vertical Slide Fade-in */}
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center lg:text-left pt-4"
+      >
         <div className="max-w-3xl mx-auto lg:mx-0">
           
           {/* Top High Density Badge */}
@@ -129,7 +136,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreStock }) => {
           </div>
 
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
