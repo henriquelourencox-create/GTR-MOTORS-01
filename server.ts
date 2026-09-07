@@ -1,11 +1,12 @@
 import express from 'express';
 import path from 'path';
+import fs from 'fs';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { createServer as createViteServer } from 'vite';
 import { INITIAL_VEHICLES } from './src/data/vehicles';
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
@@ -559,10 +560,18 @@ async function startServer() {
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), 'dist');
+    const cwdDist = path.join(process.cwd(), 'dist');
+    const localDist = path.join(__dirname, '..', 'dist');
+    const distPath = fs.existsSync(cwdDist) ? cwdDist : (fs.existsSync(localDist) ? localDist : __dirname);
+    
     app.use(express.static(distPath));
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      const indexPath = path.join(distPath, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send('Build index.html not found. Please run npm run build.');
+      }
     });
   }
 
