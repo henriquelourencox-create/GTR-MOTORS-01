@@ -1,0 +1,255 @@
+[
+  {
+    "id": "car-01",
+    "category": "carro",
+    "brand": "Honda",
+    "model": "Civic",
+    "version": "Touring 1.5 Turbo 16V",
+    "yearModel": "2024/2024",
+    "mileage": 32000,
+    "price": 159990,
+    "fuel": "Gasolina",
+    "transmission": "CVT",
+    "color": "Cinza Cósmico Metálico",
+    "bodyType": "Sedan",
+    "licensePlateEnd": "4",
+    "description": "Veículo em excelente estado de conservação, revisado, com laudo cautelar aprovado 100%. Motor 1.5 Turbo potente e econômico, interior refinado em couro claro e teto solar.",
+    "photos": [
+      "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1590362891991-f776e747a588?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "car-02",
+    "category": "carro",
+    "brand": "Toyota",
+    "model": "Corolla Cross",
+    "version": "XRX 1.8 Hybrid Flex",
+    "yearModel": "2023/2024",
+    "mileage": 28500,
+    "price": 168900,
+    "fuel": "Híbrido",
+    "transmission": "Automático",
+    "color": "Branco Pérola",
+    "bodyType": "SUV",
+    "licensePlateEnd": "7",
+    "description": "SUV híbrido de altíssima eficiência e conforto absoluto. Histórico completo de revisões em concessionária, único dono e garantia estendida de fábrica para o sistema híbrido.",
+    "photos": [
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "car-03",
+    "category": "carro",
+    "brand": "Volkswagen",
+    "model": "T-Cross",
+    "version": "Highline 250 TSI Automático",
+    "yearModel": "2023/2023",
+    "mileage": 39000,
+    "price": 124900,
+    "fuel": "Flex",
+    "transmission": "Automático",
+    "color": "Preto Ninja",
+    "bodyType": "SUV",
+    "licensePlateEnd": "2",
+    "description": "Versão topo de linha do SUV mais desejado do Brasil. Motor 1.4 Turbo com 150cv, cockpit digital Active Info Display e painel moderno.",
+    "photos": [
+      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "car-04",
+    "category": "carro",
+    "brand": "Jeep",
+    "model": "Compass",
+    "version": "Limited 1.3 Turbo T270 Flex",
+    "yearModel": "2024/2024",
+    "mileage": 18000,
+    "price": 172000,
+    "fuel": "Flex",
+    "transmission": "Automático",
+    "color": "Cinza Granite",
+    "bodyType": "SUV",
+    "licensePlateEnd": "9",
+    "description": "Seminovo em estado de 0km. Design robusto, acabamento premium com couro ecológico, assistentes de condução e motor turbo de 185cv.",
+    "photos": [
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "car-05",
+    "category": "carro",
+    "brand": "Hyundai",
+    "model": "HB20",
+    "version": "Platinum Plus 1.0 Turbo GDI Aut.",
+    "yearModel": "2024/2024",
+    "mileage": 15400,
+    "price": 98900,
+    "fuel": "Flex",
+    "transmission": "Automático",
+    "color": "Prata Sand",
+    "bodyType": "Hatch",
+    "licensePlateEnd": "3",
+    "description": "Versão mais completa do HB20. Equipado com alerta de colisão, frenagem autônoma, motor 1.0 turbo de ótima resposta e baixíssimo consumo.",
+    "photos": [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "car-06",
+    "category": "carro",
+    "brand": "BMW",
+    "model": "320i",
+    "version": "M Sport 2.0 TwinPower Turbo",
+    "yearModel": "2023/2023",
+    "mileage": 26000,
+    "price": 289900,
+    "fuel": "Gasolina",
+    "transmission": "Automático",
+    "color": "Preto Sapphire Metálico",
+    "bodyType": "Sedan",
+    "licensePlateEnd": "1",
+    "description": "Símbolo de esportividade e luxo. Pacote aerodinâmico M Sport exclusivo, rodas aro 19, escapamento esportivo e interior com acabamento em alumínio e couro Vernasca.",
+    "photos": [
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-01",
+    "category": "moto",
+    "brand": "BMW",
+    "model": "R 1250 GS",
+    "version": "Adventure Triple Black Edition",
+    "yearModel": "2024/2024",
+    "mileage": 12800,
+    "price": 118900,
+    "fuel": "Gasolina",
+    "transmission": "Manual",
+    "color": "Triple Black",
+    "bodyType": "Big Trail",
+    "licensePlateEnd": "6",
+    "description": "A rainha das estradas e aventuras. Modelo Triple Black com todos os pacotes opcionais, suspensão eletrônica Dynamic ESA, tanque de 30L e modos de pilotagem Pro.",
+    "photos": [
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-02",
+    "category": "moto",
+    "brand": "Yamaha",
+    "model": "MT-09",
+    "version": "ABS 890cc Crossplane 3",
+    "yearModel": "2024/2024",
+    "mileage": 8200,
+    "price": 61900,
+    "fuel": "Gasolina",
+    "transmission": "Manual",
+    "color": "Storm Fluo / Cinza e Vermelho",
+    "bodyType": "Naked",
+    "licensePlateEnd": "5",
+    "description": "A famosa Master of Torque. Motor tricilíndrico CP3 de 119cv, chassi leve em alumínio fundido, sensor IMU de 6 eixos e controle de tração com anti-wheelie.",
+    "photos": [
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-03",
+    "category": "moto",
+    "brand": "Honda",
+    "model": "CB 650R",
+    "version": "Neo Sports Café ABS 4 Cilindros",
+    "yearModel": "2023/2024",
+    "mileage": 14300,
+    "price": 52900,
+    "fuel": "Gasolina",
+    "transmission": "Manual",
+    "color": "Vermelho Perolizado Candy",
+    "bodyType": "Naked",
+    "licensePlateEnd": "8",
+    "description": "Estilo Neo Sports Café irresistível com o inconfundível ronco do motor 4 cilindros em linha de 88,4 cv. Suspensão dianteira Showa SFF-BP invertida.",
+    "photos": [
+      "https://images.unsplash.com/photo-1558980394-4c7c9299fe96?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-04",
+    "category": "moto",
+    "brand": "Kawasaki",
+    "model": "Ninja ZX-6R",
+    "version": "KRT Edition 636cc",
+    "yearModel": "2023/2023",
+    "mileage": 9500,
+    "price": 68900,
+    "fuel": "Gasolina",
+    "transmission": "Manual",
+    "color": "Lime Green / Ebony KRT",
+    "bodyType": "Esportiva",
+    "licensePlateEnd": "0",
+    "description": "Superesportiva autêntica com motor 636cc de alta rotação. Grafismo oficial da Kawasaki Racing Team, freios Nissin monobloco e controle de tração KTRC.",
+    "photos": [
+      "https://images.unsplash.com/photo-1609630875171-b1321377ee65?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-05",
+    "category": "moto",
+    "brand": "Honda",
+    "model": "ADV 150",
+    "version": "Adventure Scooter CBS",
+    "yearModel": "2024/2024",
+    "mileage": 6100,
+    "price": 24900,
+    "fuel": "Gasolina",
+    "transmission": "Automático",
+    "color": "Vermelho e Preto Metálico",
+    "bodyType": "Scooter",
+    "licensePlateEnd": "7",
+    "description": "A scooter aventureira perfeita para o dia a dia em São Paulo. Suspensão traseira Showa com reservatório de gás duplo, tomada 12V e sistema Idling Stop.",
+    "photos": [
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558980394-4c7c9299fe96?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop"
+    ]
+  },
+  {
+    "id": "moto-06",
+    "category": "moto",
+    "brand": "Triumph",
+    "model": "Tiger 900",
+    "version": "Rally Pro 888cc",
+    "yearModel": "2023/2024",
+    "mileage": 16500,
+    "price": 74900,
+    "fuel": "Gasolina",
+    "transmission": "Manual",
+    "color": "Matt Khaki Green com chassi branco",
+    "bodyType": "Trail",
+    "licensePlateEnd": "4",
+    "description": "Máxima capacidade off-road e conforto premium para viagens. Motor T-Plane 3 cilindros, 6 modos de pilotagem, Shift Assist e conectividade My Triumph.",
+    "photos": [
+      "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1200&auto=format&fit=crop"
+    ]
+  }
+]

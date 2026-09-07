@@ -1,10 +1,20 @@
+<IfModule mod_dir.c>
+  DirectoryIndex index.php index.html
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
-  RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-l
+
+  # Serve existing static files & directories directly
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Route SPA requests to index.php if it exists, otherwise to index.html
+  RewriteCond %{DOCUMENT_ROOT}/index.php -f
+  RewriteRule ^(.*)$ /index.php [QSA,L]
+
   RewriteRule . /index.html [L]
 </IfModule>
 
@@ -14,8 +24,10 @@
     Header set Cache-Control "max-age=31536000, public, immutable"
   </FilesMatch>
   
-  # Don't cache index.html
-  <FilesMatch "index\.html">
+  # Ensure index.html and index.php are not cached so link previews are immediate
+  <FilesMatch "(index\.html|index\.php)">
     Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
   </FilesMatch>
 </IfModule>
