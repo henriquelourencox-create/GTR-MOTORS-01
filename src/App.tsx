@@ -29,6 +29,7 @@ import { ShareModal } from './components/ShareModal';
 import { Toast } from './components/Toast';
 import { AdminLogin } from './components/admin/AdminLogin';
 import { AdminInventoryManager } from './components/admin/AdminInventoryManager';
+import { updateMetaTagsForVehicle } from './utils/seo';
 
 const DEFAULT_FILTERS: VehicleFilterState = {
   category: 'todos',
@@ -105,6 +106,11 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [vehicles, checkUrlForVehicle]);
+
+  // Keep Open Graph, Twitter cards, and Title synchronized with active vehicle
+  useEffect(() => {
+    updateMetaTagsForVehicle(selectedVehicle);
+  }, [selectedVehicle]);
 
   // Select vehicle and update browser URL without full reload
   const handleSelectVehicle = (vehicle: Vehicle, asPageMode: boolean = false) => {

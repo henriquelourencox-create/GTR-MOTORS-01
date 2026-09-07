@@ -3,6 +3,7 @@ import { X, ChevronLeft, ChevronRight, MessageSquare, Calculator, CheckCircle2, 
 import { Vehicle } from '../types';
 import { getWhatsAppUrl, WHATSAPP_MESSAGES, COMPANY } from '../data/company';
 import { ShareModal } from './ShareModal';
+import { updateMetaTagsForVehicle } from '../utils/seo';
 
 interface VehicleModalProps {
   vehicle: Vehicle | null;
@@ -37,10 +38,12 @@ export const VehicleModal: React.FC<VehicleModalProps> = ({
     if (vehicle) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      updateMetaTagsForVehicle(vehicle);
     }
     return () => {
       document.body.style.overflow = 'auto';
       window.removeEventListener('keydown', handleKeyDown);
+      updateMetaTagsForVehicle(null);
     };
   }, [vehicle, onClose, isShareOpen]);
 

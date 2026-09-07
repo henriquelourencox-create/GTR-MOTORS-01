@@ -26,6 +26,7 @@ import {
 import { Vehicle } from '../types';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 import { ShareModal } from './ShareModal';
+import { updateMetaTagsForVehicle } from '../utils/seo';
 
 interface VehiclePageProps {
   vehicle: Vehicle;
@@ -48,15 +49,14 @@ export const VehiclePage: React.FC<VehiclePageProps> = ({
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
-  // Scroll to top on vehicle switch & update document title
+  // Scroll to top on vehicle switch & update document title and meta tags
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setCurrentPhotoIndex(0);
-    const prevTitle = document.title;
-    document.title = `${vehicle.brand} ${vehicle.model} ${vehicle.version || ''} | GTR MOTORS`;
+    updateMetaTagsForVehicle(vehicle);
 
     return () => {
-      document.title = prevTitle;
+      updateMetaTagsForVehicle(null);
     };
   }, [vehicle]);
 

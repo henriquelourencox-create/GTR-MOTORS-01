@@ -547,6 +547,121 @@ app.post('/api/simulations', async (req, res) => {
 });
 
 // -------------------------------------------------------------
+// DYNAMIC OPEN GRAPH / SEO META INJECTION FOR SHARED VEHICLE LINKS
+// -------------------------------------------------------------
+async function findVehicleById(id: string): Promise<any | null> {
+  if (!id) return null;
+  const cleanId = String(id).trim();
+
+  // Try Supabase first
+  if (supabaseAdmin) {
+    try {
+      const { data, error } = await supabaseAdmin
+        .from('vehicles')
+        .select('*')
+        .eq('id', cleanId)
+        .maybeSingle();
+
+      if (!error && data) {
+        return mapRowToVehicle(data);
+      }
+    } catch (e) {
+      console.warn('Erro ao buscar veículo no Supabase para meta tags:', e);
+    }
+  }
+
+  // Fallback to in-memory / initial vehicles
+  return (
+    fallbackVehicles.find((v) => v.id === cleanId) ||
+    INITIAL_VEHICLES.find((v) => v.id === cleanId) ||
+    null
+  );
+}
+
+function escapeHtmlAttr(str: string): string {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function injectVehicleMetaTags(html: string, vehicle: any, req: express.Request): string {
+  if (!vehicle) return html;
+
+  const protocol = (req.headers['x-forwarded-proto'] as string) || req.protocol || 'https';
+  const host = req.get('host') || 'gtrmotors.vitrinecars.com.br';
+  const origin = `${protocol}://${host}`;
+  const fullUrl = `${origin}${req.originalUrl}`;
+
+  // Vehicle cover photo (first photo in array)
+  let coverPhoto =
+    Array.isArray(vehicle.photos) && vehicle.photos.length > 0 && vehicle.photos[0]
+      ? vehicle.photos[0]
+      : 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1200&auto=format&fit=crop';
+
+  if (!coverPhoto.startsWith('http://') && !coverPhoto.startsWith('https://')) {
+    coverPhoto = `${origin}${coverPhoto.startsWith('/') ? '' : '/'}${coverPhoto}`;
+  }
+
+  const formattedPrice = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    maximumFractionDigits: 0,
+  }).format(vehicle.price || 0);
+
+  const title = `${vehicle.brand} ${vehicle.model} ${vehicle.version || ''} (${vehicle.yearModel || 'Seminovo'}) | GTR MOTORS`;
+  const description = `${vehicle.brand} ${vehicle.model} ${vehicle.version || ''} ${vehicle.yearModel ? 'Ano ' + vehicle.yearModel + ' ' : ''}por apenas ${formattedPrice} na GTR MOTORS. ${vehicle.description ? vehicle.description.slice(0, 160) : 'Veículo revisado com laudo cautelar aprovado e garantia de procedência.'}`;
+
+  let out = html;
+
+  // Replace Title tag
+  out = out.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtmlAttr(title)}</title>`);
+
+  // Replace standard description
+  out = out.replace(
+    /<meta\s+name=["']description["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta name="description" content="${escapeHtmlAttr(description)}" />`
+  );
+
+  // Replace Open Graph meta tags
+  out = out.replace(
+    /<meta\s+property=["']og:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta property="og:title" content="${escapeHtmlAttr(title)}" />`
+  );
+  out = out.replace(
+    /<meta\s+property=["']og:description["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta property="og:description" content="${escapeHtmlAttr(description)}" />`
+  );
+  out = out.replace(
+    /<meta\s+property=["']og:url["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta property="og:url" content="${escapeHtmlAttr(fullUrl)}" />`
+  );
+
+  // Replace og:image with comprehensive preview meta tags for WhatsApp / Facebook / Telegram / Instagram
+  const ogImageBlock = `<meta property="og:image" content="${escapeHtmlAttr(coverPhoto)}" />\n    <meta property="og:image:secure_url" content="${escapeHtmlAttr(coverPhoto)}" />\n    <meta property="og:image:type" content="image/jpeg" />\n    <meta property="og:image:width" content="1200" />\n    <meta property="og:image:height" content="630" />\n    <meta property="og:image:alt" content="${escapeHtmlAttr(title)}" />`;
+  out = out.replace(/<meta\s+property=["']og:image["']\s+content=["'][\s\S]*?["']\s*\/?>/i, ogImageBlock);
+
+  // Replace Twitter card tags
+  out = out.replace(
+    /<meta\s+name=["']twitter:title["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta name="twitter:title" content="${escapeHtmlAttr(title)}" />`
+  );
+  out = out.replace(
+    /<meta\s+name=["']twitter:description["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta name="twitter:description" content="${escapeHtmlAttr(description)}" />`
+  );
+  out = out.replace(
+    /<meta\s+name=["']twitter:image["']\s+content=["'][\s\S]*?["']\s*\/?>/i,
+    `<meta name="twitter:image" content="${escapeHtmlAttr(coverPhoto)}" />\n    <meta name="twitter:image:alt" content="${escapeHtmlAttr(title)}" />`
+  );
+
+  return out;
+}
+
+// -------------------------------------------------------------
 // VITE MIDDLEWARE & SERVER STARTUP
 // -------------------------------------------------------------
 async function startServer() {
@@ -558,20 +673,72 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: 'spa',
     });
+
+    // Handle vehicle link previews & crawlers in development
+    app.use(async (req, res, next) => {
+      const vehicleId = (req.query.veiculo ||
+        req.query.anuncio ||
+        req.query.id ||
+        (req.path.startsWith('/veiculo/') ? req.path.split('/')[2] : '')) as string;
+      const isHtml =
+        req.headers.accept?.includes('text/html') ||
+        req.url === '/' ||
+        req.url.startsWith('/?');
+
+      if (vehicleId && isHtml) {
+        try {
+          const vehicle = await findVehicleById(vehicleId);
+          if (vehicle) {
+            const indexHtmlPath = path.resolve(process.cwd(), 'index.html');
+            if (fs.existsSync(indexHtmlPath)) {
+              let template = fs.readFileSync(indexHtmlPath, 'utf-8');
+              template = await vite.transformIndexHtml(req.originalUrl, template);
+              template = injectVehicleMetaTags(template, vehicle, req);
+              res.setHeader('Content-Type', 'text/html; charset=utf-8');
+              return res.status(200).send(template);
+            }
+          }
+        } catch (e) {
+          console.warn('Dev HTML transform error:', e);
+        }
+      }
+      next();
+    });
+
     app.use(vite.middlewares);
   } else {
     const cwdDist = path.join(process.cwd(), 'dist');
     const localDist = path.join(__dirname, '..', 'dist');
     const distPath = fs.existsSync(cwdDist) ? cwdDist : (fs.existsSync(localDist) ? localDist : __dirname);
-    
+
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+
+    app.get('*', async (req, res) => {
       const indexPath = path.join(distPath, 'index.html');
-      if (fs.existsSync(indexPath)) {
-        res.sendFile(indexPath);
-      } else {
-        res.status(404).send('Build index.html not found. Please run npm run build.');
+      if (!fs.existsSync(indexPath)) {
+        return res.status(404).send('Build index.html not found. Please run npm run build.');
       }
+
+      const vehicleId = (req.query.veiculo ||
+        req.query.anuncio ||
+        req.query.id ||
+        (req.path.startsWith('/veiculo/') ? req.path.split('/')[2] : '')) as string;
+
+      if (vehicleId) {
+        try {
+          const vehicle = await findVehicleById(vehicleId);
+          if (vehicle) {
+            let html = fs.readFileSync(indexPath, 'utf-8');
+            html = injectVehicleMetaTags(html, vehicle, req);
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            return res.send(html);
+          }
+        } catch (err) {
+          console.warn('Erro ao injetar meta tags dinâmicas do veículo:', err);
+        }
+      }
+
+      res.sendFile(indexPath);
     });
   }
 
