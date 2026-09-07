@@ -13,24 +13,6 @@ export default defineConfig(() => {
     },
     build: {
       chunkSizeWarningLimit: 1200,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              if (id.includes('lucide-react')) {
-                return 'lucide-icons';
-              }
-              if (id.includes('firebase')) {
-                return 'firebase-bundle';
-              }
-              if (id.includes('react') || id.includes('react-dom')) {
-                return 'react-core';
-              }
-              return 'vendor';
-            }
-          },
-        },
-      },
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
