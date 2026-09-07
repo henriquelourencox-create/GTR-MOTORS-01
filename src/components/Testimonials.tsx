@@ -31,7 +31,7 @@ export const Testimonials: React.FC = () => {
             className="inline-flex items-center gap-2.5 p-3 rounded-sm bg-[#111111] border border-[#1b1b1b] hover:border-[#2a2a2a] transition-colors group"
           >
             <div className="w-8 h-8 rounded-sm bg-[#080808] flex items-center justify-center font-black text-emerald-400 text-xs border border-[#1b1b1b]">
-              5.0
+              4.9
             </div>
             <div className="text-left">
               <div className="flex items-center gap-0.5 text-amber-400">
