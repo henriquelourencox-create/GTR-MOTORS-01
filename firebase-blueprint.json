@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "Vehicle": {
+      "title": "Vehicle",
+      "description": "Inventory vehicle (cars and motorcycles)",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique vehicle ID" },
+        "make": { "type": "string", "description": "Vehicle brand/make" },
+        "model": { "type": "string", "description": "Vehicle model name" },
+        "version": { "type": "string", "description": "Vehicle trim/version" },
+        "year": { "type": "number", "description": "Manufacturing or model year" },
+        "price": { "type": "number", "description": "Price in BRL" },
+        "promotionalPrice": { "type": "number", "description": "Optional promotional price" },
+        "mileage": { "type": "number", "description": "Mileage in KM" },
+        "fuel": { "type": "string", "description": "Fuel type" },
+        "transmission": { "type": "string", "description": "Transmission type" },
+        "color": { "type": "string", "description": "Color name" },
+        "type": { "type": "string", "enum": ["carro", "moto"], "description": "Vehicle category" },
+        "plateEnd": { "type": "string", "description": "Final digit of license plate" },
+        "featured": { "type": "boolean", "description": "Whether vehicle is highlighted in opportunities" },
+        "status": { "type": "string", "enum": ["Disponível", "Reservado", "Vendido"], "description": "Inventory status" },
+        "features": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of optional equipment and features"
+        },
+        "photos": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of photo URLs"
+        },
+        "description": { "type": "string", "description": "Detailed text description" },
+        "createdAt": { "type": "string", "description": "Creation timestamp ISO string" },
+        "updatedAt": { "type": "string", "description": "Update timestamp ISO string" }
+      },
+      "required": ["id", "make", "model", "version", "year", "price", "mileage", "fuel", "transmission", "color", "type", "photos"]
+    },
+    "AppraisalRequest": {
+      "title": "AppraisalRequest",
+      "description": "Vehicle appraisal / sell request submitted by a customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Request ID" },
+        "customerName": { "type": "string", "description": "Customer contact name" },
+        "customerPhone": { "type": "string", "description": "Customer phone / WhatsApp" },
+        "customerEmail": { "type": "string", "description": "Customer email" },
+        "brand": { "type": "string", "description": "Vehicle brand" },
+        "model": { "type": "string", "description": "Vehicle model" },
+        "year": { "type": "string", "description": "Year of vehicle" },
+        "mileage": { "type": "string", "description": "Mileage of vehicle" },
+        "desiredPrice": { "type": "string", "description": "Customer expected value" },
+        "notes": { "type": "string", "description": "Additional notes" },
+        "status": { "type": "string", "enum": ["Novo", "Em Análise", "Respondido"], "description": "Review status" },
+        "createdAt": { "type": "string", "description": "Submission ISO date" }
+      },
+      "required": ["customerName", "customerPhone", "brand", "model", "year", "createdAt"]
+    },
+    "FinancingSimulation": {
+      "title": "FinancingSimulation",
+      "description": "Financing simulation requested by a customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Simulation ID" },
+        "name": { "type": "string", "description": "Customer name" },
+        "cpf": { "type": "string", "description": "Customer CPF" },
+        "phone": { "type": "string", "description": "Customer phone" },
+        "email": { "type": "string", "description": "Customer email" },
+        "vehicleInterest": { "type": "string", "description": "Target vehicle model or ID" },
+        "entryValue": { "type": "number", "description": "Down payment amount" },
+        "installments": { "type": "number", "description": "Number of installments" },
+        "createdAt": { "type": "string", "description": "Submission ISO date" }
+      },
+      "required": ["name", "cpf", "phone", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/vehicles/{vehicleId}": {
+      "schema": "Vehicle",
+      "description": "Catalog vehicles collection"
+    },
+    "/appraisals/{appraisalId}": {
+      "schema": "AppraisalRequest",
+      "description": "Customer sell/appraisal proposals"
+    },
+    "/simulations/{simulationId}": {
+      "schema": "FinancingSimulation",
+      "description": "Customer financing simulations"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "GTR MOTORS",
+  "description": "Loja de veículos novos e seminovos em São Paulo — Carros e Motos com procedência e facilidade de financiamento.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

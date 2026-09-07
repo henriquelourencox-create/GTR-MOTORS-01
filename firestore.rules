@@ -1,0 +1,25 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Vehicles collection - Publicly readable, writable for admin/app management
+    match /vehicles/{vehicleId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Appraisals (Avaliações / Vender meu carro) - Public can submit, reads allowed
+    match /appraisals/{appraisalId} {
+      allow read: if true;
+      allow create: if request.resource.data.customerName is string && request.resource.data.customerPhone is string;
+      allow update, delete: if true;
+    }
+
+    // Financing simulations - Public can submit
+    match /simulations/{simulationId} {
+      allow read: if true;
+      allow create: if request.resource.data.name is string && request.resource.data.phone is string;
+      allow update, delete: if true;
+    }
+  }
+}

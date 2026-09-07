@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #080808;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
+/* Optimize touch targets and interactions */
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Image rendering and loading optimization */
+img {
+  content-visibility: auto;
+}
+
+/* High Density Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1b1b1b;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E10600;
+}
+
+/* High Density theme border & glow utilities */
+.border-density {
+  border-color: #1b1b1b;
+}
+
+.bg-density-card {
+  background-color: #111111;
+}
+
+.bg-density-input {
+  background-color: #1b1b1b;
+}
+
+.automotive-glow {
+  box-shadow: 0 0 25px -8px rgba(225, 6, 0, 0.3);
+}
+
