@@ -432,7 +432,7 @@ export const INSTAGRAM_DEMO_POSTS = [
     caption: 'Novidade no estoque GTR! BMW R 1250 GS Adventure Triple Black revisada e pronta pra rodar.',
     likes: 184,
     comments: 23,
-    postUrl: 'https://www.instagram.com/gtrmotossp/',
+    postUrl: 'https://www.instagram.com/gtrmotorssp/',
   },
   {
     id: 'ig-2',
@@ -440,7 +440,7 @@ export const INSTAGRAM_DEMO_POSTS = [
     caption: 'Civic Touring 1.5 Turbo disponível. Laudo 100% aprovado e condições imperdíveis de financiamento.',
     likes: 245,
     comments: 41,
-    postUrl: 'https://www.instagram.com/gtrmotossp/',
+    postUrl: 'https://www.instagram.com/gtrmotorssp/',
   },
   {
     id: 'ig-3',
@@ -448,7 +448,7 @@ export const INSTAGRAM_DEMO_POSTS = [
     caption: 'Yamaha MT-09 2024! O torque que você procura com a procedência que só a GTR Motors oferece.',
     likes: 312,
     comments: 38,
-    postUrl: 'https://www.instagram.com/gtrmotossp/',
+    postUrl: 'https://www.instagram.com/gtrmotorssp/',
   },
   {
     id: 'ig-4',
@@ -456,7 +456,7 @@ export const INSTAGRAM_DEMO_POSTS = [
     caption: 'Toyota Corolla Cross Hybrid. Economia, conforto e elegância. Venha fazer um test-drive!',
     likes: 198,
     comments: 19,
-    postUrl: 'https://www.instagram.com/gtrmotossp/',
+    postUrl: 'https://www.instagram.com/gtrmotorssp/',
   },
 ];
 

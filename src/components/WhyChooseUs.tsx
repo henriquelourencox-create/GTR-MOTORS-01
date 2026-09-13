@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Users, Handshake, Zap, Award, CheckCircle } from 'lucide-react';
+import { ShieldCheck, Users, Handshake, Zap, Award, CheckCircle, History } from 'lucide-react';
 
 export const WhyChooseUs: React.FC = () => {
   const pillars = [
@@ -25,15 +25,39 @@ export const WhyChooseUs: React.FC = () => {
     },
     {
       icon: Award,
-      title: 'EXPERIÊNCIA',
-      desc: 'Uma empresa dedicada ao mercado de veículos, com foco em qualidade de atendimento e segurança.',
+      title: 'EXPERIÊNCIA DESDE 2013',
+      desc: 'Mais de uma década de dedicação ao mercado de veículos, com foco em procedência, segurança, confiança e qualidade.',
     },
   ];
 
   return (
-    <section id="sobre" className="py-12 bg-[#080808] border-t border-[#1b1b1b]">
+    <section id="sobre" className="py-14 bg-[#080808] border-t border-[#1b1b1b]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        {/* Nossa História / Trajetória */}
+        <div className="mb-14 p-6 sm:p-8 lg:p-10 rounded-sm bg-[#111111] border border-[#1b1b1b] relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#E10600]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-sm bg-[#E10600]/10 border border-[#E10600]/20 text-[#E10600] text-[10px] font-bold uppercase tracking-widest mb-3">
+              <History className="w-3.5 h-3.5" />
+              <span>Nossa Trajetória • Desde 2013</span>
+            </div>
+
+            <h2 className="font-display font-black text-2xl sm:text-3xl lg:text-4xl text-white uppercase tracking-tight mb-5">
+              SOBRE A <span className="text-[#E10600]">GTR MOTORS</span>
+            </h2>
+
+            <div className="space-y-4 text-neutral-300 text-sm sm:text-base leading-relaxed">
+              <p>
+                A <strong>GTR Motos</strong> atua no mercado desde 2013, oferecendo motos novas e seminovas com procedência garantida e excelente atendimento. Nosso grande diferencial e principal foco é a qualidade dos nossos produtos, sempre selecionados com rigor para garantir a satisfação dos clientes.
+              </p>
+              <p>
+                Ao longo dos anos, construímos uma sólida reputação, prezando pela transparência e pela excelência no atendimento, tanto na venda quanto no pós-venda. No início de 2026 ampliamos nossas atividades e passamos a atuar também no comércio de carros, e a partir desta nova fase, <strong>somos a GTR MOTORS</strong> mantendo o mesmo compromisso com qualidade e confiança.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="text-[10px] font-bold uppercase tracking-widest text-[#E10600]">
             Nossos Valores

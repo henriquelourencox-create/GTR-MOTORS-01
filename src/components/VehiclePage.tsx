@@ -468,11 +468,19 @@ export const VehiclePage: React.FC<VehiclePageProps> = ({
                 <div className="text-neutral-400">{COMPANY.address.fullFormatted}</div>
                 <div className="flex items-center gap-1.5 text-neutral-300 pt-1">
                   <Clock className="w-3.5 h-3.5 text-[#d50104]" />
-                  <span>Segunda a Sexta: 08:30 às 18:30 | Sábados: 09:00 às 15:00</span>
+                  <span>{COMPANY.openingHours.weekdays} | {COMPANY.openingHours.saturday}</span>
                 </div>
-                <div className="flex items-center gap-1.5 text-[#d50104] font-bold pt-1">
-                  <Phone className="w-3.5 h-3.5" />
-                  <span>{COMPANY.phoneDisplay}</span>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs pt-1">
+                  <div className="flex items-center gap-1.5 text-[#d50104] font-bold">
+                    <Phone className="w-3.5 h-3.5" />
+                    <span>WhatsApp: {COMPANY.phoneDisplay}</span>
+                  </div>
+                  <div className="flex items-center gap-1 text-neutral-400">
+                    <span>Fixo:</span>
+                    <a href={`tel:${COMPANY.landlineRaw}`} className="text-white hover:text-[#d50104] transition-colors font-medium">
+                      {COMPANY.landlineDisplay}
+                    </a>
+                  </div>
                 </div>
               </div>
 

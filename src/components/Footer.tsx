@@ -95,6 +95,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                 </a>
               </li>
               <li>
+                <a href="#consignacao" className="hover:text-[#E10600] transition-colors">
+                  Consignação de Veículos
+                </a>
+              </li>
+              <li>
                 <a href="#financiamento" className="hover:text-[#E10600] transition-colors">
                   Financiamento
                 </a>
@@ -135,18 +140,31 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                 </span>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#E10600] shrink-0" />
-                <a
-                  href={`tel:${COMPANY.phoneRaw}`}
-                  className="hover:text-white font-bold transition-colors"
-                >
-                  (11) 94774-8217
-                </a>
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-3.5 h-3.5 text-[#E10600] shrink-0" />
+                  <span className="text-neutral-400 text-[11px]">WhatsApp:</span>
+                  <a
+                    href={`tel:${COMPANY.phoneRaw}`}
+                    className="hover:text-white font-bold transition-colors"
+                  >
+                    {COMPANY.phoneDisplay}
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-2 pl-5.5">
+                  <span className="text-neutral-400 text-[11px]">Fixo:</span>
+                  <a
+                    href={`tel:${COMPANY.landlineRaw}`}
+                    className="hover:text-white font-bold transition-colors"
+                  >
+                    {COMPANY.landlineDisplay}
+                  </a>
+                </div>
               </div>
 
               <div className="pt-1 text-[11px] text-neutral-500 leading-relaxed">
-                Segunda a Sexta: 09h às 18h | Sábado: 09h às 14h
+                Segunda a Sexta: 08h às 18h | Sábado: 08h às 15h
               </div>
             </div>
           </div>

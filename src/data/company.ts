@@ -4,6 +4,8 @@ export const COMPANY = {
   slogan: 'Carros e motos selecionados com procedência e facilidade de negociação.',
   phoneDisplay: '(11) 94774-8217',
   phoneRaw: '5511947748217',
+  landlineDisplay: '(11) 5511-8806',
+  landlineRaw: '551155118806',
   address: {
     street: 'Estrada de Itapecerica, 2689A',
     neighborhood: 'Vila Maracana',
@@ -13,13 +15,13 @@ export const COMPANY = {
     fullFormatted: 'Estrada de Itapecerica, 2689A — Vila Maracana, São Paulo — SP, 05835-005',
   },
   openingHours: {
-    weekdays: 'Segunda a Sexta: 09h às 18h',
-    saturday: 'Sábado: 09h às 14h',
+    weekdays: 'Segunda a Sexta: 08h às 18h',
+    saturday: 'Sábado: 08h às 15h',
     sunday: 'Domingo: Fechado',
   },
   instagram: {
-    handle: '@gtrmotossp',
-    url: 'https://www.instagram.com/gtrmotossp/',
+    handle: '@gtrmotorssp',
+    url: 'https://www.instagram.com/gtrmotorssp/',
   },
   googleMaps: {
     placeUrl: 'https://www.google.com/maps/place/GTR+Motos/@-23.651728,-46.7957282,14z/',
@@ -42,6 +44,13 @@ export const WHATSAPP_MESSAGES = {
   sellVehicle: (brand: string, model: string, year: string, price: string) =>
     `Olá! Gostaria de avaliar meu veículo para venda ou troca:\n- Tipo/Modelo: ${brand} ${model}\n- Ano: ${year}\n- Valor pretendido: ${price || 'A combinar'}`,
   tradeIn: 'Olá! Estou pensando em trocar de carro/moto e gostaria de consultar as possibilidades de negociação na GTR MOTORS.',
+  consignment: (brand?: string, model?: string, year?: string, price?: string, modality?: string) =>
+    `Olá! Tenho interesse em deixar meu veículo em CONSIGNAÇÃO na GTR MOTORS:\n` +
+    (brand && model ? `- Veículo: ${brand} ${model}\n` : '') +
+    (year ? `- Ano: ${year}\n` : '') +
+    (price ? `- Valor pretendido líquido: R$ ${price}\n` : '') +
+    (modality ? `- Modalidade: ${modality}\n` : '') +
+    `Gostaria de saber mais sobre as taxas, contrato e como iniciar a divulgação.`,
   financing: (vehicle: string, downPayment: string, installments: number) =>
     `Olá! Gostaria de consultar as condições de financiamento na GTR MOTORS:\n- Veículo: ${vehicle || 'Veículo do estoque'}\n- Entrada pretendida: ${downPayment || 'A combinar'}\n- Parcelamento: ${installments ? `${installments}x` : 'Simular parcelas'}`,
   visitSchedule: 'Olá! Gostaria de agendar uma visita para ver os veículos disponíveis na loja da Estrada de Itapecerica.',

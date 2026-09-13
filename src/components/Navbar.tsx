@@ -26,6 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
     { name: 'Estoque', href: '#estoque', onClick: () => onNavigateToCategory?.('todos') },
     { name: 'Carros', href: '#estoque', onClick: () => onNavigateToCategory?.('carro') },
     { name: 'Motos', href: '#estoque', onClick: () => onNavigateToCategory?.('moto') },
+    { name: 'Consignação', href: '#consignacao' },
     { name: 'Venda seu veículo', href: '#vender' },
     { name: 'Financiamento', href: '#financiamento' },
     { name: 'Sobre nós', href: '#sobre' },
@@ -54,7 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden xl:flex items-center gap-6 text-xs font-semibold uppercase tracking-wider">
+          <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-[11px] 2xl:text-xs font-semibold uppercase tracking-wider">
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -88,16 +89,28 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
               </button>
             )}
 
-            <a
-              href={`tel:${COMPANY.phoneRaw}`}
-              id="header-phone-link"
-              className="hidden lg:flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#A7A7A7] hover:text-white transition-colors"
-            >
-              <div className="w-6 h-6 rounded-sm bg-[#1b1b1b] border border-[#2a2a2a] flex items-center justify-center text-[#d50104]">
-                <Phone className="w-3 h-3" />
-              </div>
-              <span>{COMPANY.phoneDisplay}</span>
-            </a>
+            <div className="hidden lg:flex items-center gap-3 text-[11px] font-bold uppercase tracking-wider text-[#A7A7A7]">
+              <a
+                href={`tel:${COMPANY.phoneRaw}`}
+                id="header-phone-link"
+                className="flex items-center gap-1.5 hover:text-white transition-colors"
+                title="WhatsApp / Celular"
+              >
+                <div className="w-6 h-6 rounded-sm bg-[#1b1b1b] border border-[#2a2a2a] flex items-center justify-center text-[#d50104]">
+                  <Phone className="w-3 h-3" />
+                </div>
+                <span>{COMPANY.phoneDisplay}</span>
+              </a>
+              <span className="text-neutral-700 hidden xl:inline">•</span>
+              <a
+                href={`tel:${COMPANY.landlineRaw}`}
+                id="header-landline-link"
+                className="hidden xl:inline hover:text-white transition-colors text-[10px] text-neutral-400"
+                title="Telefone Fixo"
+              >
+                Fixo: {COMPANY.landlineDisplay}
+              </a>
+            </div>
 
             <a
               href={getWhatsAppUrl(WHATSAPP_MESSAGES.general)}
@@ -199,9 +212,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
               Falar no WhatsApp
             </a>
 
-            <div className="flex items-center justify-center gap-2 text-[10px] text-[#A7A7A7] py-1">
-              <Phone className="w-3 h-3 text-[#d50104]" />
-              <span>{COMPANY.phoneDisplay} • Estrada de Itapecerica, 2689A</span>
+            <div className="flex flex-col items-center justify-center gap-1 text-[10px] text-[#A7A7A7] py-1 text-center">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <div className="flex items-center gap-1">
+                  <Phone className="w-3 h-3 text-[#d50104]" />
+                  <span>WhatsApp: {COMPANY.phoneDisplay}</span>
+                </div>
+                <span className="text-neutral-700">•</span>
+                <span>Fixo: {COMPANY.landlineDisplay}</span>
+              </div>
+              <div>Estrada de Itapecerica, 2689A</div>
             </div>
           </div>
         </div>

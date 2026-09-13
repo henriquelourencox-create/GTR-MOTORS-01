@@ -428,7 +428,16 @@ export const VehicleModal: React.FC<VehicleModalProps> = ({
               <div className="p-3 rounded-sm bg-[#080808] border border-[#1b1b1b] text-xs text-[#A7A7A7] space-y-1">
                 <div className="text-white font-bold text-xs">{COMPANY.name}</div>
                 <div className="text-[11px]">{COMPANY.address.fullFormatted}</div>
-                <div className="text-[#E10600] font-bold text-xs">{COMPANY.phoneDisplay}</div>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs pt-0.5">
+                  <div className="text-[#E10600] font-bold">
+                    <span>WhatsApp: </span>
+                    <a href={`tel:${COMPANY.phoneRaw}`} className="hover:underline">{COMPANY.phoneDisplay}</a>
+                  </div>
+                  <div className="text-neutral-300 font-medium text-[11px]">
+                    <span className="text-neutral-500">Fixo: </span>
+                    <a href={`tel:${COMPANY.landlineRaw}`} className="hover:underline text-white">{COMPANY.landlineDisplay}</a>
+                  </div>
+                </div>
               </div>
             </div>
 

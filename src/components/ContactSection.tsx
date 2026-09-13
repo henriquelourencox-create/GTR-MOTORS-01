@@ -100,7 +100,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onExploreStock, 
               <div className="pt-4 border-t border-[#1b1b1b] flex flex-col sm:flex-row sm:items-center gap-3 text-[11px] text-[#A7A7A7]">
                 <div className="flex items-center gap-1.5">
                   <Phone className="w-3.5 h-3.5 text-[#E10600]" />
-                  <span className="font-bold text-white">{COMPANY.phoneDisplay}</span>
+                  <span>WhatsApp:</span>
+                  <a href={`tel:${COMPANY.phoneRaw}`} className="font-bold text-white hover:text-[#E10600] transition-colors">
+                    {COMPANY.phoneDisplay}
+                  </a>
+                </div>
+                <div className="hidden sm:block text-neutral-700">•</div>
+                <div className="flex items-center gap-1.5">
+                  <span>Fixo:</span>
+                  <a href={`tel:${COMPANY.landlineRaw}`} className="font-bold text-white hover:text-[#E10600] transition-colors">
+                    {COMPANY.landlineDisplay}
+                  </a>
                 </div>
                 <div className="hidden sm:block text-neutral-700">•</div>
                 <div>{COMPANY.address.street}, São Paulo - SP</div>

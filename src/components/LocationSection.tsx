@@ -61,14 +61,28 @@ export const LocationSection: React.FC = () => {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-[10px] font-bold text-[#A7A7A7] uppercase">Telefone / WhatsApp</h4>
-                  <a
-                    href={`tel:${COMPANY.phoneRaw}`}
-                    className="text-xs font-bold text-white hover:text-[#E10600] transition-colors block mt-0.5"
-                  >
-                    {COMPANY.phoneDisplay}
-                  </a>
-                  <p className="text-[11px] text-[#A7A7A7]">
+                  <h4 className="text-[10px] font-bold text-[#A7A7A7] uppercase">Telefones & Atendimento</h4>
+                  <div className="flex flex-col gap-1 mt-1">
+                    <div className="flex items-center gap-1.5 text-xs">
+                      <span className="text-[10px] text-neutral-400 font-semibold uppercase">WhatsApp:</span>
+                      <a
+                        href={`tel:${COMPANY.phoneRaw}`}
+                        className="font-bold text-white hover:text-[#E10600] transition-colors"
+                      >
+                        {COMPANY.phoneDisplay}
+                      </a>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs">
+                      <span className="text-[10px] text-neutral-400 font-semibold uppercase">Fixo:</span>
+                      <a
+                        href={`tel:${COMPANY.landlineRaw}`}
+                        className="font-bold text-white hover:text-[#E10600] transition-colors"
+                      >
+                        {COMPANY.landlineDisplay}
+                      </a>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-[#A7A7A7] mt-1.5">
                     Atendimento rápido e personalizado
                   </p>
                 </div>

@@ -56,6 +56,19 @@ export interface SellVehicleFormData {
   notes: string;
 }
 
+export interface ConsignmentFormData {
+  name: string;
+  whatsapp: string;
+  vehicleType: VehicleCategory;
+  brand: string;
+  model: string;
+  year: string;
+  mileage: string;
+  desiredPrice: string;
+  modality: 'fisica' | 'virtual';
+  notes: string;
+}
+
 export interface FinancingSimulationData {
   name: string;
   whatsapp: string;

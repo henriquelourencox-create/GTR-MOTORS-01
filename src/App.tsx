@@ -14,6 +14,7 @@ import { VehicleGrid } from './components/VehicleGrid';
 import { Categories } from './components/Categories';
 import { Opportunities } from './components/Opportunities';
 import { SellVehicle } from './components/SellVehicle';
+import { Consignment } from './components/Consignment';
 import { TradeInBanner } from './components/TradeInBanner';
 import { Financing } from './components/Financing';
 import { WhyChooseUs } from './components/WhyChooseUs';
@@ -290,7 +291,10 @@ export default function App() {
           {/* 6. Sell Your Vehicle Form */}
           <SellVehicle onSuccessToast={showToast} />
 
-          {/* 7. Trade-in Banner */}
+          {/* 7. Consignment Section (Aba / Seção de Consignação) */}
+          <Consignment onSuccessToast={showToast} />
+
+          {/* 8. Trade-in Banner */}
           <TradeInBanner />
 
           {/* 8. Financing Simulator & Form */}

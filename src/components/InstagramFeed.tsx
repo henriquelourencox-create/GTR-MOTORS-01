@@ -26,10 +26,11 @@ export const InstagramFeed: React.FC = () => {
 
           <a
             id="btn-seguir-instagram"
-            href={COMPANY.instagram.url}
+            href="https://www.instagram.com/gtrmotorssp/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 bg-[#E10600] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-sm shadow-md transition-all active:scale-[0.98] self-start md:self-auto"
+            aria-label="Seguir no Instagram @gtrmotorssp"
           >
             <Instagram className="w-3.5 h-3.5" />
             <span>SEGUIR NO INSTAGRAM</span>

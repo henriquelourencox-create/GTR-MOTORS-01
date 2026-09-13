@@ -124,6 +124,16 @@ export const SellVehicle: React.FC<SellVehicleProps> = ({ onSuccessToast }) => {
                 </div>
               </div>
             </div>
+
+            <div className="p-3 rounded-sm bg-[#1b1b1b]/60 border border-[#2a2a2a] flex items-center justify-between text-xs">
+              <span className="text-neutral-300 text-[11px]">Quer vender pelo valor máximo com segurança total?</span>
+              <a
+                href="#consignacao"
+                className="text-[#E10600] hover:text-white font-bold text-[11px] uppercase tracking-wider shrink-0 transition-colors"
+              >
+                Ver Consignação →
+              </a>
+            </div>
           </div>
 
           {/* Form Side */}
