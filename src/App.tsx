@@ -244,7 +244,6 @@ export default function App() {
       {/* Navigation Header */}
       <Navbar
         onNavigateToCategory={handleCategorySelect}
-        onOpenAdmin={handleOpenAdmin}
       />
 
       {/* Main Content Sections: Either Standalone Vehicle Page or Full Dealer Layout */}

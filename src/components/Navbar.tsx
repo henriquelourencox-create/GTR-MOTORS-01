@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, MessageSquare, Car, Bike, ShieldCheck, ChevronRight, Lock } from 'lucide-react';
+import { Menu, X, Phone, MessageSquare, Car, Bike, ShieldCheck, ChevronRight } from 'lucide-react';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 import { GTRLogo } from './GTRLogo';
 
 interface NavbarProps {
   onNavigateToCategory?: (category: 'todos' | 'carro' | 'moto') => void;
   onOpenVehicleInterest?: () => void;
-  onOpenAdmin?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmin }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -43,16 +42,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           
-          {/* Logo */}
-          <a
-            href="#inicio"
-            id="brand-logo"
-            className="flex items-center gap-2 group focus:outline-none py-0.5"
-          >
-            <GTRLogo size="md" />
-          </a>
+          {/* Logo & Mobile Slogan */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
+            <a
+              href="#inicio"
+              id="brand-logo"
+              className="flex items-center gap-2 group focus:outline-none py-0.5 shrink-0"
+            >
+              <GTRLogo size="md" />
+            </a>
+
+            {/* Slogan ao lado da Logo no Mobile */}
+            <div
+              id="navbar-mobile-slogan"
+              className="xl:hidden flex flex-col justify-center pl-2.5 sm:pl-3 border-l border-[#262626] min-w-0"
+            >
+              <span className="font-display font-black text-[9px] sm:text-[11px] text-white uppercase tracking-tight leading-tight">
+                CONFIANÇA QUE MOVE NEGÓCIOS{' '}
+                <span className="text-[#E10600] whitespace-nowrap">DESDE 2013</span>
+              </span>
+            </div>
+          </div>
 
           {/* Desktop Nav */}
           <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-[11px] 2xl:text-xs font-semibold uppercase tracking-wider">
@@ -76,19 +88,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
 
           {/* CTA Buttons */}
           <div className="hidden sm:flex items-center gap-3">
-            {onOpenAdmin && (
-              <button
-                type="button"
-                id="header-admin-btn"
-                onClick={onOpenAdmin}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm bg-[#1b1b1b] hover:bg-[#252525] border border-[#2a2a2a] hover:border-[#d50104] text-[#A7A7A7] hover:text-white text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer"
-                title="Acessar painel de administração do estoque"
-              >
-                <Lock className="w-3 h-3 text-[#d50104]" />
-                <span>Gestão Estoque</span>
-              </button>
-            )}
-
             <div className="hidden lg:flex items-center gap-3 text-[11px] font-bold uppercase tracking-wider text-[#A7A7A7]">
               <a
                 href={`tel:${COMPANY.phoneRaw}`}
@@ -187,20 +186,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onNavigateToCategory, onOpenAdmi
           </div>
 
           <div className="pt-2 flex flex-col gap-2.5">
-            {onOpenAdmin && (
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenAdmin();
-                }}
-                className="w-full flex items-center justify-center gap-2 bg-[#1b1b1b] hover:bg-[#252525] border border-[#2a2a2a] text-white font-bold text-xs uppercase tracking-wider py-2.5 rounded-sm transition-colors cursor-pointer"
-              >
-                <Lock className="w-3.5 h-3.5 text-[#d50104]" />
-                <span>Painel de Gestão do Estoque</span>
-              </button>
-            )}
-
             <a
               href={getWhatsAppUrl(WHATSAPP_MESSAGES.general)}
               target="_blank"
