@@ -2,6 +2,7 @@ import React from 'react';
 import { Phone, MapPin, Instagram, MessageSquare, ArrowUp, ShieldCheck, Lock } from 'lucide-react';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 import { GTRLogo } from './GTRLogo';
+import { VitrineCarsLogo } from './VitrineCarsLogo';
 
 interface FooterProps {
   onNavigateToCategory?: (category: 'todos' | 'carro' | 'moto') => void;
@@ -172,11 +173,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-neutral-500">
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
           <p>© 2026 GTR MOTORS. Todos os direitos reservados.</p>
 
+          {/* Créditos: Site criado por Vitrine Cars */}
+          <a
+            href="https://wa.me/5511916208454?text=Gostaria%20de%20um%20or%C3%A7amento%20para%20criar%20um%20site%3F%0A"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="footer-created-by-vitrine-cars"
+            className="group inline-flex items-center gap-2.5 px-3 py-1.5 rounded-sm bg-[#111111]/90 hover:bg-[#161616] border border-[#222222] hover:border-[#0088FF]/60 transition-all cursor-pointer shadow-sm"
+            title="Solicitar orçamento para criar um site no WhatsApp da Vitrine Cars"
+          >
+            <span className="text-[10px] uppercase font-bold tracking-wider text-neutral-400 group-hover:text-neutral-200 transition-colors">
+              Site criado por:
+            </span>
+            <VitrineCarsLogo className="h-5 sm:h-5.5 w-auto transition-transform duration-300 group-hover:scale-105" />
+          </a>
+
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">Loja de Carros e Motos em São Paulo</span>
+            <span className="hidden lg:inline text-neutral-500">Loja de Carros e Motos em São Paulo</span>
             <button
               type="button"
               onClick={scrollToTop}
