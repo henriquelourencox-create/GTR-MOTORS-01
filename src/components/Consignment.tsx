@@ -146,17 +146,13 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
               Consignação Física (Showroom)
             </h3>
             <p className="text-[#A7A7A7] text-xs leading-relaxed mb-4">
-              Seu veículo fica em exposição no nosso showroom na <strong>Estrada de Itapecerica, 2689A</strong>. Recebe higienização, polimento comercial, preparação e atendimento diário a clientes presenciais qualificados.
+              Seu veículo fica em exposição no nosso showroom na <strong>Estrada de Itapecerica, 2689A</strong>, com atendimento diário a clientes presenciais qualificados.
             </p>
 
             <ul className="space-y-2 text-xs text-neutral-300">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#E10600] shrink-0" />
                 <span>Exposição física com alto fluxo diário de compradores</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#E10600] shrink-0" />
-                <span>Veículo monitorado, protegido e coberto</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#E10600] shrink-0" />

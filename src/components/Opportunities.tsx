@@ -16,7 +16,7 @@ export const Opportunities: React.FC<OpportunitiesProps> = ({ onExploreClick }) 
     {
       icon: Sparkles,
       title: 'Veículos Selecionados',
-      desc: 'Revisão criteriosa em todos os itens mecânicos, elétricos e estéticos.',
+      desc: 'Veículos revisados e com garantia.',
     },
     {
       icon: BadgePercent,

@@ -114,9 +114,6 @@ export const Hero: React.FC<HeroProps> = ({ onExploreStock }) => {
                 <span className="block text-[11px] font-black uppercase tracking-wider text-white">
                   VEÍCULOS SELECIONADOS
                 </span>
-                <span className="block text-[10px] text-[#A7A7A7]">
-                  Laudo Cautelar 100%
-                </span>
               </div>
             </div>
 
