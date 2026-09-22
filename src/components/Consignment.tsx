@@ -194,7 +194,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
               Consignação Virtual
             </h3>
             <p className="text-[#A7A7A7] text-xs leading-relaxed mb-4">
-              Você <strong>continua utilizando seu veículo no dia a dia</strong> normalmente. Realizamos as fotos profissionais e divulgamos em todos os nossos canais. Você só traz para a loja quando houver proposta aprovada.
+              Você <strong>continua utilizando seu veículo no dia a dia</strong> normalmente. Realizamos as fotos profissionais e divulgamos em todos os nossos canais. Você só traz para a loja quando houver um potencial comprador.
             </p>
 
             <ul className="space-y-2 text-xs text-neutral-300">
@@ -248,7 +248,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
               Zero Risco de Golpes
             </h4>
             <p className="text-[#A7A7A7] text-[11px] leading-relaxed">
-              Sem receber estranhos no seu condomínio, sem negociar com desconhecidos e sem falsos comprovantes de PIX. Segurança completa do início ao fim.
+              Sem receber estranhos em sua residência, sem negociar com desconhecidos e sem falsos comprovantes de PIX. Segurança completa do início ao fim.
             </p>
           </div>
 
@@ -260,7 +260,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
               Divulgação em Massa
             </h4>
             <p className="text-[#A7A7A7] text-[11px] leading-relaxed">
-              Presença nos maiores portais automotivos (Webmotors, iCarros, OLX, Mercado Livre), além de anúncios no Instagram e nosso estoque oficial.
+              Presença nos maiores portais automotivos, além de anúncios no Instagram e nosso estoque oficial.
             </p>
           </div>
 
@@ -272,7 +272,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
               Contrato & Transferência
             </h4>
             <p className="text-[#A7A7A7] text-[11px] leading-relaxed">
-              Contrato formal de intermediação com laudo cautelar. Cuidamos de toda a tramitação e transferência junto ao Detran.
+              Contrato formal de consignação. Cuidamos de toda tramitação com segurança.
             </p>
           </div>
         </div>
@@ -552,7 +552,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
                     1. Como funciona o pagamento após a venda?
                   </h5>
                   <p className="text-[#A7A7A7] text-[11px] mt-0.5 leading-relaxed">
-                    Assim que a negociação é concretizada e o pagamento do comprador compensado, o valor líquido combinado com você é transferido integralmente via PIX ou TED.
+                    Após a venda ser concluída e o pagamento do comprador compensado, o proprietário realiza o reconhecimento de firma no cartório. Com essa etapa concluída, o valor líquido combinado é transferido integralmente via Pix ou TED.
                   </p>
                 </div>
 
@@ -561,7 +561,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
                     2. E se o comprador tiver carro na troca?
                   </h5>
                   <p className="text-[#A7A7A7] text-[11px] mt-0.5 leading-relaxed">
-                    A GTR Motors absorve o carro ou moto da troca no estoque da loja! Você não precisa aceitar o veículo dele, você recebe seu pagamento em dinheiro.
+                    A GTR Motors absorve o carro ou moto da troca no estoque da loja! Você não precisa aceitar o veículo dele, você recebe seu pagamento via PIX ou TED.
                   </p>
                 </div>
 
@@ -570,7 +570,7 @@ export const Consignment: React.FC<ConsignmentProps> = ({ onSuccessToast }) => {
                     3. Há contrato assinado?
                   </h5>
                   <p className="text-[#A7A7A7] text-[11px] mt-0.5 leading-relaxed">
-                    Sim! Assinamos um contrato de intermediação detalhado com vistoria do estado do veículo, quilometragem e o valor líquido exato que você receberá.
+                    Sim! Assinamos um contrato de consignação detalhado com vistoria do estado do veículo, quilometragem e o valor líquido exato que você receberá.
                   </p>
                 </div>
               </div>
