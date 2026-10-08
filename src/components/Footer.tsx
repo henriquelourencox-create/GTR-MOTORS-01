@@ -124,7 +124,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                 </a>
               </li>
               {onOpenAdmin && (
-                <li className="pt-1.5 border-t border-[#1b1b1b]">
+                <li className="pt-1.5 border-t border-transparent">
                   <a
                     href="/admin"
                     id="footer-admin-link"
@@ -132,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                       e.preventDefault();
                       onOpenAdmin();
                     }}
-                    className="inline-flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer text-xs"
+                    className="inline-flex items-center gap-1.5 opacity-0 hover:opacity-100 transition-opacity text-xs text-neutral-400 cursor-default"
                     title="Acessar painel administrativo em /admin"
                   >
                     <Lock className="w-3 h-3 text-[#E10600]" />

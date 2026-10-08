@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Plus, Trash2, Image, Sparkles, Check, Upload, Loader2 } from 'lucide-react';
+import { X, Plus, Trash2, Image, Sparkles, Check, Upload, Loader2, GripVertical, ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Vehicle, VehicleCategory, VehicleStatus, FuelType, TransmissionType } from '../../types';
 import { compressImageFile, optimizeVehiclePhotos } from '../../utils/imageCompressor';
 
@@ -75,6 +75,10 @@ export const AdminVehicleForm: React.FC<AdminVehicleFormProps> = ({
   const [isCompressingPhotos, setIsCompressingPhotos] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
+  // Drag and Drop reordering states for photos
+  const [draggedPhotoIndex, setDraggedPhotoIndex] = useState<number | null>(null);
+  const [dragOverPhotoIndex, setDragOverPhotoIndex] = useState<number | null>(null);
+
   const handleAddFeature = (featureText?: string) => {
     const text = (featureText || newFeatureInput).trim();
     if (!text) return;
@@ -110,6 +114,76 @@ export const AdminVehicleForm: React.FC<AdminVehicleFormProps> = ({
     }));
   };
 
+  // Drag & drop handlers
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedPhotoIndex(index);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', String(index));
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    if (dragOverPhotoIndex !== index) {
+      setDragOverPhotoIndex(index);
+    }
+  };
+
+  const handleDragEnd = () => {
+    setDraggedPhotoIndex(null);
+    setDragOverPhotoIndex(null);
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    if (draggedPhotoIndex === null || draggedPhotoIndex === targetIndex) {
+      setDraggedPhotoIndex(null);
+      setDragOverPhotoIndex(null);
+      return;
+    }
+
+    setFormData((prev) => {
+      const photos = [...(prev.photos || [])];
+      const [movedItem] = photos.splice(draggedPhotoIndex, 1);
+      photos.splice(targetIndex, 0, movedItem);
+      return {
+        ...prev,
+        photos,
+      };
+    });
+
+    setDraggedPhotoIndex(null);
+    setDragOverPhotoIndex(null);
+  };
+
+  const handleMovePhoto = (fromIndex: number, direction: 'left' | 'right') => {
+    const targetIndex = direction === 'left' ? fromIndex - 1 : fromIndex + 1;
+    if (targetIndex < 0 || targetIndex >= (formData.photos?.length || 0)) return;
+
+    setFormData((prev) => {
+      const photos = [...(prev.photos || [])];
+      const [movedItem] = photos.splice(fromIndex, 1);
+      photos.splice(targetIndex, 0, movedItem);
+      return {
+        ...prev,
+        photos,
+      };
+    });
+  };
+
+  const handleSetCoverPhoto = (index: number) => {
+    if (index === 0) return;
+    setFormData((prev) => {
+      const photos = [...(prev.photos || [])];
+      const [movedItem] = photos.splice(index, 1);
+      photos.unshift(movedItem);
+      return {
+        ...prev,
+        photos,
+      };
+    });
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
@@ -120,7 +194,7 @@ export const AdminVehicleForm: React.FC<AdminVehicleFormProps> = ({
     try {
       const compressedList: string[] = [];
       for (const file of fileList) {
-        const compressedBase64 = await compressImageFile(file, 1200, 900, 0.75);
+        const compressedBase64 = await compressImageFile(file);
         if (compressedBase64) {
           compressedList.push(compressedBase64);
         }
@@ -469,10 +543,16 @@ export const AdminVehicleForm: React.FC<AdminVehicleFormProps> = ({
           {/* Section 3: Fotos */}
           <div className="bg-[#080808] border border-[#1b1b1b] p-4 rounded-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <h4 className="font-bold text-[#E10600] uppercase text-[10px] tracking-widest flex items-center gap-1.5">
-                <Image className="w-3.5 h-3.5" />
-                3. Fotos do Veículo ({formData.photos?.length || 0})
-              </h4>
+              <div>
+                <h4 className="font-bold text-[#E10600] uppercase text-[10px] tracking-widest flex items-center gap-1.5">
+                  <Image className="w-3.5 h-3.5" />
+                  3. Fotos do Veículo ({formData.photos?.length || 0})
+                </h4>
+                <p className="text-[10px] text-[#A7A7A7] mt-0.5 flex items-center gap-1.5">
+                  <span>💡</span>
+                  <span>Clique e arraste as fotos para mudar a posição. A 1ª foto será a <strong>CAPA</strong> do anúncio.</span>
+                </p>
+              </div>
 
               {/* Upload Local File */}
               <label className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-[#1b1b1b] border border-[#2a2a2a] text-[#A7A7A7] hover:text-white text-[11px] font-bold cursor-pointer transition-colors ${
@@ -520,26 +600,122 @@ export const AdminVehicleForm: React.FC<AdminVehicleFormProps> = ({
               </button>
             </div>
 
-            {/* Photo Previews */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2 pt-1">
-              {formData.photos?.map((url, idx) => (
-                <div key={idx} className="relative group aspect-square rounded-sm overflow-hidden border border-[#1b1b1b] bg-[#111111]">
-                  <img src={url} alt={`Foto ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && (
-                    <span className="absolute top-1 left-1 bg-[#E10600] text-white text-[8px] font-black uppercase px-1 py-0.5 rounded-xs">
-                      Capa
-                    </span>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => handleRemovePhoto(idx)}
-                    className="absolute top-1 right-1 bg-black/80 hover:bg-red-600 text-white p-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-                    title="Remover foto"
+            {/* Photo Previews with Drag and Drop Reordering */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-2.5 pt-1">
+              {formData.photos?.map((url, idx) => {
+                const isBeingDragged = draggedPhotoIndex === idx;
+                const isDragTarget = dragOverPhotoIndex === idx && draggedPhotoIndex !== idx;
+
+                return (
+                  <div
+                    key={`${url.slice(0, 36)}-${idx}`}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, idx)}
+                    onDragOver={(e) => handleDragOver(e, idx)}
+                    onDragEnd={handleDragEnd}
+                    onDrop={(e) => handleDrop(e, idx)}
+                    className={`relative group aspect-square rounded-sm overflow-hidden border bg-[#111111] cursor-grab active:cursor-grabbing select-none transition-all duration-150 ${
+                      isBeingDragged
+                        ? 'opacity-30 scale-95 border-dashed border-[#E10600]'
+                        : isDragTarget
+                        ? 'border-2 border-[#E10600] scale-105 shadow-xl shadow-[#E10600]/40 z-20'
+                        : idx === 0
+                        ? 'border-red-600 ring-1 ring-red-600/50'
+                        : 'border-[#1b1b1b] hover:border-[#383838]'
+                    }`}
+                    title="Clique e arraste para reposicionar esta foto"
                   >
-                    <Trash2 className="w-3 h-3" />
-                  </button>
-                </div>
-              ))}
+                    <img
+                      src={url}
+                      alt={`Foto ${idx + 1}`}
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
+
+                    {/* Gradient Overlay with Interactive Controls */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-1.5 pointer-events-none">
+                      {/* Top Bar: Drag Grip Handle & Remove Button */}
+                      <div className="flex items-center justify-between pointer-events-auto">
+                        <span
+                          className="p-1 rounded-xs bg-black/75 text-white/90 cursor-grab active:cursor-grabbing flex items-center justify-center shadow-xs"
+                          title="Clique e arraste para reordenar"
+                        >
+                          <GripVertical className="w-3.5 h-3.5 text-neutral-300" />
+                        </span>
+
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemovePhoto(idx);
+                          }}
+                          className="bg-black/80 hover:bg-red-600 text-white p-1 rounded-xs transition-colors cursor-pointer shadow-xs"
+                          title="Remover foto"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      </div>
+
+                      {/* Bottom Bar: Quick Arrows & Set as Cover Button */}
+                      <div className="flex items-center justify-between gap-1 pointer-events-auto">
+                        <div className="flex items-center gap-0.5">
+                          {idx > 0 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMovePhoto(idx, 'left');
+                              }}
+                              className="bg-black/80 hover:bg-[#222222] text-white p-1 rounded-xs transition-colors cursor-pointer"
+                              title="Mover para esquerda"
+                            >
+                              <ChevronLeft className="w-3 h-3" />
+                            </button>
+                          )}
+                          {idx < (formData.photos?.length || 0) - 1 && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleMovePhoto(idx, 'right');
+                              }}
+                              className="bg-black/80 hover:bg-[#222222] text-white p-1 rounded-xs transition-colors cursor-pointer"
+                              title="Mover para direita"
+                            >
+                              <ChevronRight className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+
+                        {idx > 0 && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSetCoverPhoto(idx);
+                            }}
+                            className="bg-red-600/90 hover:bg-red-600 text-white text-[9px] font-black uppercase px-1.5 py-0.5 rounded-xs transition-colors cursor-pointer shadow-xs"
+                            title="Tornar esta foto a capa do anúncio"
+                          >
+                            Capa
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Status Badge: Capa or Position Number */}
+                    {idx === 0 ? (
+                      <span className="absolute top-1 left-1 bg-[#E10600] text-white text-[8px] font-black uppercase px-1.5 py-0.5 rounded-xs shadow-md flex items-center gap-1 z-10 pointer-events-none">
+                        <Star className="w-2.5 h-2.5 fill-white" />
+                        <span>CAPA</span>
+                      </span>
+                    ) : (
+                      <span className="absolute top-1 left-1 bg-black/80 text-neutral-300 text-[8px] font-mono px-1 py-0.5 rounded-xs z-10 pointer-events-none group-hover:opacity-0 transition-opacity">
+                        #{idx + 1}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
