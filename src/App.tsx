@@ -60,6 +60,19 @@ export default function App() {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isAdminAuth, setIsAdminAuth] = useState(() => getAdminAuthState());
 
+  // Check URL path or query params for /admin
+  const checkUrlForAdmin = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasAdminParam = urlParams.has('admin') || urlParams.get('modo') === 'admin';
+    const isAdminRoute = path === '/admin' || path.endsWith('/admin') || hasAdminParam;
+
+    if (isAdminRoute) {
+      setIsAdminOpen(true);
+    }
+  }, []);
+
   // Check URL parameters on mount and on popstate for direct vehicle permalinks
   const checkUrlForVehicle = useCallback((currentVehicles: Vehicle[]) => {
     if (typeof window === 'undefined') return;
@@ -87,10 +100,18 @@ export default function App() {
 
   // Initial check on load
   useEffect(() => {
+    checkUrlForAdmin();
     checkUrlForVehicle(vehicles);
 
     const handlePopState = () => {
+      // 1. Admin route check
+      const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
       const urlParams = new URLSearchParams(window.location.search);
+      const hasAdminParam = urlParams.has('admin') || urlParams.get('modo') === 'admin';
+      const isAdminRoute = path === '/admin' || path.endsWith('/admin') || hasAdminParam;
+      setIsAdminOpen(isAdminRoute);
+
+      // 2. Vehicle permalink check
       const vehicleId = urlParams.get('veiculo') || urlParams.get('anuncio') || urlParams.get('id');
       if (vehicleId) {
         const found = vehicles.find((v) => v.id === vehicleId);
@@ -106,7 +127,7 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [vehicles, checkUrlForVehicle]);
+  }, [vehicles, checkUrlForVehicle, checkUrlForAdmin]);
 
   // Keep Open Graph, Twitter cards, and Title synchronized with active vehicle
   useEffect(() => {
@@ -153,10 +174,22 @@ export default function App() {
 
   const handleOpenAdmin = () => {
     setIsAdminOpen(true);
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+      if (path !== '/admin') {
+        window.history.pushState({ page: 'admin' }, '', '/admin');
+      }
+    }
   };
 
   const handleCloseAdmin = () => {
     setIsAdminOpen(false);
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+      if (path === '/admin') {
+        window.history.pushState({}, '', '/');
+      }
+    }
   };
 
   const handleAdminLoginSuccess = () => {
@@ -169,6 +202,12 @@ export default function App() {
     setIsAdminAuth(false);
     setAdminAuthState(false);
     setIsAdminOpen(false);
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname.toLowerCase().replace(/\/+$/, '');
+      if (path === '/admin') {
+        window.history.pushState({}, '', '/');
+      }
+    }
     showToast('Você saiu do modo administrador.');
   };
 
