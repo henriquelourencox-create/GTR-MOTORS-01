@@ -99,26 +99,27 @@ export const AdminInventoryManager: React.FC<AdminInventoryManagerProps> = ({
   };
 
   const handleSaveVehicle = async (vehicle: Vehicle) => {
-    let updated: Vehicle[];
-    const exists = vehicles.some((v) => v.id === vehicle.id);
-
-    if (exists) {
-      updated = vehicles.map((v) => (v.id === vehicle.id ? vehicle : v));
-      onShowToast(`Veículo "${vehicle.brand} ${vehicle.model}" atualizado no banco!`);
-    } else {
-      updated = [vehicle, ...vehicles];
-      onShowToast(`Veículo "${vehicle.brand} ${vehicle.model}" cadastrado no banco!`);
-    }
-
     try {
-      await saveVehicleToFirestore(vehicle);
-    } catch (e) {
-      console.warn('Erro ao salvar no Firestore:', e);
-    }
+      const savedVehicle = await saveVehicleToFirestore(vehicle);
+      const exists = vehicles.some((v) => v.id === savedVehicle.id);
+      let updated: Vehicle[];
 
-    onUpdateVehicles(updated);
-    setIsFormOpen(false);
-    setEditingVehicle(null);
+      if (exists) {
+        updated = vehicles.map((v) => (v.id === savedVehicle.id ? savedVehicle : v));
+        onShowToast(`Veículo "${savedVehicle.brand} ${savedVehicle.model}" atualizado no banco!`);
+      } else {
+        updated = [savedVehicle, ...vehicles];
+        onShowToast(`Veículo "${savedVehicle.brand} ${savedVehicle.model}" cadastrado com sucesso!`);
+      }
+
+      onUpdateVehicles(updated);
+      setIsFormOpen(false);
+      setEditingVehicle(null);
+    } catch (e: any) {
+      console.error('Erro ao salvar veículo:', e);
+      onShowToast(`❌ ${e?.message || 'Erro ao salvar no banco de dados.'}`);
+      throw e;
+    }
   };
 
   const handleDeleteConfirmed = async () => {

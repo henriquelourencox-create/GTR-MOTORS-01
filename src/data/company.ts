@@ -23,6 +23,10 @@ export const COMPANY = {
     handle: '@gtrmotorssp',
     url: 'https://www.instagram.com/gtrmotorssp/',
   },
+  youtube: {
+    handle: '@gtrmotors-sp',
+    url: 'https://www.youtube.com/@gtrmotors-sp',
+  },
   googleMaps: {
     placeUrl: 'https://www.google.com/maps/place/GTR+Motos/@-23.651728,-46.7957282,14z/',
     embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.4984531475734!2d-46.7725946!3d-23.6580979!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5187e1f422ff%3A0x6b4d4dc0e05ebf36!2sEstr.%20de%20Itapecerica%2C%202689A%20-%20Vila%20Maracan%C3%A3%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2005835-005!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr',

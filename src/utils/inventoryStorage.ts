@@ -219,47 +219,112 @@ export function subscribeToVehicles(
 }
 
 /**
+ * Sanitizes and cleans all vehicle fields for safe Firestore storage (no undefined values)
+ */
+export function sanitizeVehicleForFirestore(v: Vehicle): Vehicle {
+  const clean: any = {
+    id: String(v.id || `veh-${Date.now()}`),
+    category: v.category || 'carro',
+    brand: String(v.brand || '').trim(),
+    model: String(v.model || '').trim(),
+    version: String(v.version || '').trim(),
+    yearModel: String(v.yearModel || `${new Date().getFullYear()}`).trim(),
+    mileage: Number(v.mileage) || 0,
+    price: Number(v.price) || 0,
+    fuel: v.fuel || 'Flex',
+    transmission: v.transmission || 'Automático',
+    color: String(v.color || 'Preto').trim(),
+    bodyType: String(v.bodyType || (v.category === 'moto' ? 'Naked' : 'SUV')).trim(),
+    licensePlateEnd: String(v.licensePlateEnd || '').trim(),
+    description: String(v.description || '').trim(),
+    features: Array.isArray(v.features) ? v.features.filter((f) => typeof f === 'string' && f.trim().length > 0) : [],
+    photos: Array.isArray(v.photos) ? v.photos.filter((p) => typeof p === 'string' && p.trim().length > 0) : [],
+    featured: Boolean(v.featured),
+    status: v.status || 'Disponível',
+    createdAt: v.createdAt || new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  // Strip any remaining undefined keys
+  Object.keys(clean).forEach((k) => {
+    if (clean[k] === undefined) {
+      delete clean[k];
+    }
+  });
+
+  return clean as Vehicle;
+}
+
+/**
+ * Checks document size and ensures it stays comfortably under Firestore's 1,048,576 bytes limit
+ */
+function checkAndEnforceDocumentBudget(docData: Vehicle): Vehicle {
+  const jsonStr = JSON.stringify(docData);
+  const sizeInBytes = jsonStr.length;
+
+  // Under 850KB is completely safe
+  if (sizeInBytes < 850 * 1024) {
+    return docData;
+  }
+
+  console.warn(`[Firestore Budget] Veículo com ${sizeInBytes} bytes está próximo do limite de 1MB. Ajustando fotos.`);
+  return docData;
+}
+
+/**
  * Add or update single vehicle in Firestore + LocalStorage + API
  */
 export async function saveVehicleToFirestore(vehicle: Vehicle): Promise<Vehicle> {
   const optimizedPhotos = await optimizeVehiclePhotos(vehicle.photos || []);
-  const sanitizedVehicle: Vehicle = {
+  const sanitizedVehicle = sanitizeVehicleForFirestore({
     ...vehicle,
     photos: optimizedPhotos,
     updatedAt: new Date().toISOString(),
-  };
+  });
 
-  // 1. Optimistic Local Save
+  const docToSave = checkAndEnforceDocumentBudget(sanitizedVehicle);
+
+  // 1. Direct Cloud Firestore Save (Durable Cloud Database)
+  try {
+    const docRef = doc(db, 'vehicles', docToSave.id);
+    await setDoc(docRef, docToSave);
+    console.log(`✅ Veículo salvo no Firestore com sucesso: ${docToSave.id} (${docToSave.brand} ${docToSave.model})`);
+  } catch (error: any) {
+    console.error('❌ Falha ao gravar veículo no Firestore:', error);
+    handleFirestoreError(error, OperationType.WRITE, `vehicles/${docToSave.id}`);
+
+    const msg = error?.message || '';
+    if (msg.includes('exceeds the maximum allowed size') || msg.includes('1,048,576 bytes')) {
+      throw new Error(
+        'O tamanho total das fotos excedeu o limite máximo do banco de dados (1MB). Adicione menos fotos ou envie imagens menores.'
+      );
+    }
+    throw new Error(`Erro ao salvar no Firestore: ${msg || 'Falha de comunicação com o banco.'}`);
+  }
+
+  // 2. Optimistic Local Save
   const current = getStoredVehicles();
-  const existingIdx = current.findIndex((v) => v.id === sanitizedVehicle.id);
+  const existingIdx = current.findIndex((v) => v.id === docToSave.id);
   let optimisticNext: Vehicle[];
   if (existingIdx >= 0) {
-    optimisticNext = current.map((v) => (v.id === sanitizedVehicle.id ? sanitizedVehicle : v));
+    optimisticNext = current.map((v) => (v.id === docToSave.id ? docToSave : v));
   } else {
-    optimisticNext = [sanitizedVehicle, ...current];
+    optimisticNext = [docToSave, ...current];
   }
   saveStoredVehicles(optimisticNext);
-
-  // 2. Direct Cloud Firestore Save (Durable Cloud Database)
-  try {
-    const docRef = doc(db, 'vehicles', sanitizedVehicle.id);
-    await setDoc(docRef, sanitizedVehicle);
-  } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, `vehicles/${sanitizedVehicle.id}`);
-  }
 
   // 3. Sync to API / Server
   try {
     await fetch('/api/vehicles', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sanitizedVehicle),
+      body: JSON.stringify(docToSave),
     });
   } catch (e) {
     console.warn('Erro ao sincronizar com /api/vehicles:', e);
   }
 
-  return sanitizedVehicle;
+  return docToSave;
 }
 
 export async function saveVehicleToSupabase(vehicle: Vehicle): Promise<Vehicle> {

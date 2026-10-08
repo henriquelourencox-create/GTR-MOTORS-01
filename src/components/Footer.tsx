@@ -1,5 +1,5 @@
 import React from 'react';
-import { Phone, MapPin, Instagram, MessageSquare, ArrowUp, ShieldCheck, Lock } from 'lucide-react';
+import { Phone, MapPin, Instagram, Youtube, MessageSquare, ArrowUp, ShieldCheck, Lock } from 'lucide-react';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 import { GTRLogo } from './GTRLogo';
 import { VitrineCarsLogo } from './VitrineCarsLogo';
@@ -34,10 +34,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                 href={COMPANY.instagram.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-sm bg-[#111111] border border-[#1b1b1b] flex items-center justify-center text-[#A7A7A7] hover:text-white hover:border-[#2a2a2a] transition-colors"
+                className="w-8 h-8 rounded-sm bg-[#111111] border border-[#1b1b1b] flex items-center justify-center text-[#A7A7A7] hover:text-[#E10600] hover:border-[#2a2a2a] transition-colors"
                 aria-label="Instagram da GTR Motors"
+                title="Instagram @gtrmotorssp"
               >
                 <Instagram className="w-3.5 h-3.5" />
+              </a>
+
+              <a
+                href={COMPANY.youtube.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-sm bg-[#111111] border border-[#1b1b1b] flex items-center justify-center text-[#A7A7A7] hover:text-[#E10600] hover:border-[#2a2a2a] transition-colors"
+                aria-label="YouTube da GTR Motors"
+                title="YouTube @gtrmotors-sp"
+              >
+                <Youtube className="w-3.5 h-3.5" />
               </a>
 
               <a
@@ -46,6 +58,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigateToCategory, onOpenAdmi
                 rel="noopener noreferrer"
                 className="w-8 h-8 rounded-sm bg-[#111111] border border-[#1b1b1b] flex items-center justify-center text-[#A7A7A7] hover:text-[#E10600] hover:border-[#2a2a2a] transition-colors"
                 aria-label="WhatsApp da GTR Motors"
+                title="WhatsApp Oficial"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
               </a>

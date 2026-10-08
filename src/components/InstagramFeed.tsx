@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, Heart, MessageCircle, ArrowUpRight } from 'lucide-react';
+import { Instagram, Youtube, Heart, MessageCircle, ArrowUpRight } from 'lucide-react';
 import { COMPANY } from '../data/company';
 import { INSTAGRAM_DEMO_POSTS } from '../data/vehicles';
 
@@ -19,23 +19,39 @@ export const InstagramFeed: React.FC = () => {
               ACOMPANHE A GTR MOTORS
             </h2>
             <p className="text-[#A7A7A7] text-xs sm:text-sm mt-1">
-              Veja novidades, veículos disponíveis e oportunidades no nosso Instagram oficial{' '}
-              <span className="text-[#E10600] font-bold">{COMPANY.instagram.handle}</span>.
+              Veja novidades, veículos disponíveis e vídeos no nosso Instagram{' '}
+              <span className="text-[#E10600] font-bold">{COMPANY.instagram.handle}</span> e canal do YouTube{' '}
+              <span className="text-[#E10600] font-bold">{COMPANY.youtube.handle}</span>.
             </p>
           </div>
 
-          <a
-            id="btn-seguir-instagram"
-            href="https://www.instagram.com/gtrmotorssp/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 bg-[#E10600] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider px-5 py-2.5 rounded-sm shadow-md transition-all active:scale-[0.98] self-start md:self-auto"
-            aria-label="Seguir no Instagram @gtrmotorssp"
-          >
-            <Instagram className="w-3.5 h-3.5" />
-            <span>SEGUIR NO INSTAGRAM</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
+          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
+            <a
+              id="btn-seguir-instagram"
+              href={COMPANY.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#E10600] hover:bg-red-700 text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-sm shadow-md transition-all active:scale-[0.98]"
+              aria-label="Seguir no Instagram @gtrmotorssp"
+            >
+              <Instagram className="w-3.5 h-3.5" />
+              <span>INSTAGRAM</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+
+            <a
+              id="btn-canal-youtube"
+              href={COMPANY.youtube.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-[#1b1b1b] hover:bg-[#252525] border border-[#2a2a2a] text-white font-bold text-xs uppercase tracking-wider px-4 py-2.5 rounded-sm shadow-md transition-all active:scale-[0.98]"
+              aria-label="Inscrever-se no canal do YouTube @gtrmotors-sp"
+            >
+              <Youtube className="w-3.5 h-3.5 text-[#E10600]" />
+              <span>YOUTUBE</span>
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
 
         {/* Instagram Post Grid */}

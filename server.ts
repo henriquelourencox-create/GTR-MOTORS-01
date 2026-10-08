@@ -104,8 +104,82 @@ function mapVehicleToRow(v: any): any {
   };
 }
 
-// In-memory fallback if Supabase is temporarily unconfigured
-let fallbackVehicles: any[] = [...INITIAL_VEHICLES];
+// Static uploads directory for vehicle photos
+const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+app.use('/uploads', express.static(uploadsDir));
+
+// Local persistent JSON storage fallback
+const dataDir = path.join(process.cwd(), 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
+const inventoryFile = path.join(dataDir, 'inventory.json');
+
+function loadInventoryFromDisk(): any[] {
+  try {
+    if (fs.existsSync(inventoryFile)) {
+      const content = fs.readFileSync(inventoryFile, 'utf-8');
+      const parsed = JSON.parse(content);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn('Erro ao ler estoque do disco:', err);
+  }
+  return [...INITIAL_VEHICLES];
+}
+
+function saveInventoryToDisk(vehicles: any[]) {
+  try {
+    fs.writeFileSync(inventoryFile, JSON.stringify(vehicles, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Erro ao salvar estoque no disco:', err);
+  }
+}
+
+// In-memory fallback if Supabase is temporarily unconfigured (backed by disk)
+let fallbackVehicles: any[] = loadInventoryFromDisk();
+
+// Endpoint to upload and persist vehicle photos to server disk
+app.post('/api/upload-photo', async (req, res) => {
+  try {
+    const { image } = req.body;
+    if (!image || typeof image !== 'string') {
+      return res.status(400).json({ error: 'Imagem base64 não fornecida.' });
+    }
+
+    if (image.startsWith('http://') || image.startsWith('https://') || image.startsWith('/uploads/')) {
+      return res.json({ success: true, url: image });
+    }
+
+    const matches = image.match(/^data:([A-Za-z0-9\-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+      return res.status(400).json({ error: 'Formato de imagem data URL inválido.' });
+    }
+
+    const mimeType = matches[1];
+    const base64Data = matches[2];
+    const buffer = Buffer.from(base64Data, 'base64');
+
+    let ext = 'jpg';
+    if (mimeType.includes('png')) ext = 'png';
+    else if (mimeType.includes('webp')) ext = 'webp';
+
+    const safeName = `photo-${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${ext}`;
+    const filePath = path.join(uploadsDir, safeName);
+    fs.writeFileSync(filePath, buffer);
+
+    const publicUrl = `/uploads/${safeName}`;
+    return res.json({ success: true, url: publicUrl });
+  } catch (err: any) {
+    console.error('Erro no upload de foto:', err);
+    return res.status(500).json({ error: err.message || 'Erro ao processar foto.' });
+  }
+});
 
 // -------------------------------------------------------------
 // DATABASE AUTO-INITIALIZER / SEEDER
@@ -250,6 +324,7 @@ app.post('/api/vehicles', async (req, res) => {
   } else {
     fallbackVehicles = [fullVehicle, ...fallbackVehicles];
   }
+  saveInventoryToDisk(fallbackVehicles);
 
   if (supabaseAdmin) {
     try {
@@ -293,6 +368,7 @@ app.put('/api/vehicles/:id', async (req, res) => {
   fallbackVehicles = fallbackVehicles.map((v) =>
     v.id === id ? { ...v, ...updates, updatedAt } : v
   );
+  saveInventoryToDisk(fallbackVehicles);
   const updated = fallbackVehicles.find((v) => v.id === id);
 
   if (supabaseAdmin) {
@@ -332,6 +408,7 @@ app.delete('/api/vehicles/:id', async (req, res) => {
 
   // Always update in-memory fallback
   fallbackVehicles = fallbackVehicles.filter((v) => v.id !== id);
+  saveInventoryToDisk(fallbackVehicles);
 
   if (supabaseAdmin) {
     try {

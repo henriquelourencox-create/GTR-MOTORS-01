@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquare, ArrowRight, Instagram, Phone, Mail, Send, Sparkles } from 'lucide-react';
+import { MessageSquare, ArrowRight, Instagram, Youtube, Phone, Mail, Send, Sparkles } from 'lucide-react';
 import { COMPANY, getWhatsAppUrl, WHATSAPP_MESSAGES } from '../data/company';
 
 interface ContactSectionProps {
@@ -93,6 +93,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onExploreStock, 
                 >
                   <Instagram className="w-3.5 h-3.5 text-[#E10600]" />
                   <span>INSTAGRAM</span>
+                </a>
+
+                <a
+                  id="contact-btn-youtube"
+                  href={COMPANY.youtube.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#1b1b1b] hover:bg-[#252525] border border-[#2a2a2a] text-white font-bold text-xs uppercase tracking-wider px-5 py-3 rounded-sm transition-all"
+                >
+                  <Youtube className="w-3.5 h-3.5 text-[#E10600]" />
+                  <span>YOUTUBE</span>
                 </a>
               </div>
 
